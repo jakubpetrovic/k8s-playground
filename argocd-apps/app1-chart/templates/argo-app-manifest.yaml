@@ -38,3 +38,25 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: test-app
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app1-prod
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: {{ .Values.gitrepo }}
+    targetRevision: env-prod
+    type: helm
+    path: apps/test-app
+    helm:
+      releaseName: app1-prod
+      valueFiles: 
+        - "values-prod.yaml"
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: test-app
