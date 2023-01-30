@@ -1,0 +1,6 @@
+gitrepo: https://github.com/jakubpetrovic/k8s-playground.git
+infra:
+   type: prod
+
+branch:
+  name: main

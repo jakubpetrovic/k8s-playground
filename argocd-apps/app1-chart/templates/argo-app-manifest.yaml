@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: apps
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  description: ArgoCD project for testing
+  sourceRepos:
+    - '*'
+    - 'https://github.com/jakubpetrovic/k8s-playground.git'
+  destinations:
+    - namespace: '*'
+      server: '*'
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+---
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: guestbook
+#   namespace: argocd
+# spec:
+#   project: default
+#   source:
+#     repoURL: https://github.com/jakubpetrovic/k8s-playground.git
+#     targetRevision: main
+#     path: guestbook
+#   destination:
+#     server: https://kubernetes.default.svc
+#     namespace: guestbook
