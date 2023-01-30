@@ -25,7 +25,7 @@ metadata:
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
-  project: default
+  project: apps
   source:
     repoURL: {{ .Values.gitrepo }}
     targetRevision: main
@@ -47,7 +47,7 @@ metadata:
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
-  project: default
+  project: apps
   source:
     repoURL: {{ .Values.gitrepo }}
     targetRevision: env-prod
