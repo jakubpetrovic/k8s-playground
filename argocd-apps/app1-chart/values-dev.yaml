@@ -1,4 +1,5 @@
 gitrepo: https://github.com/jakubpetrovic/k8s-playground.git
+environment: dev
 infra:
    type: dev
 
