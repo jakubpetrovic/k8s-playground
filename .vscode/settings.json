@@ -1,8 +1,0 @@
-{
-    "yaml.schemas": {
-        "https://json.schemastore.org/helmfile.json": [
-            "file:///home/jakub/repos/k8s-playground/argocd-apps/templates/projects.yaml",
-            "file:///c%3A/Users/jakpet/repos/personal/k8s-playground/argocd-apps/template/values.yaml"
-        ]
-    }
-}
