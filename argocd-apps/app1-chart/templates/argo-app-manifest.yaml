@@ -37,4 +37,4 @@ spec:
         - "values-{{ .Values.environment }}.yaml"
   destination:
     server: https://kubernetes.default.svc
-    namespace: test-app
+    namespace: "{{ .Values.environment }}-ns"
