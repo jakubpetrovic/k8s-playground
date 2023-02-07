@@ -24,4 +24,8 @@ resource "helm_release" "argocd_app1_dev" {
   values = [
     "${file("../argocd-apps/app1-chart/values-dev.yaml")}"
   ]
+
+  depends_on = [
+    helm_release.argocd
+  ]
 }

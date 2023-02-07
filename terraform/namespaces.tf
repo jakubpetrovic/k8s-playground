@@ -1,8 +1,8 @@
-resource "kubernetes_namespace" "argocd" {
+/* resource "kubernetes_namespace" "argocd" {
   metadata {
     name = "argocd"
   }
-}
+} */
 
 resource "kubernetes_namespace" "helm-app" {
   metadata {
