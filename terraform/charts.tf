@@ -18,7 +18,7 @@ resource "helm_release" "argocd" {
 
 #ARGOCD App resources
 resource "helm_release" "argocd_app1_dev" {
-  name  = "argocd-app1"
+  name  = "argocd-app1-dev"
   chart = "../argocd-apps/app1-chart"
 
   values = [
@@ -31,7 +31,7 @@ resource "helm_release" "argocd_app1_dev" {
 }
 
 resource "helm_release" "argocd_app1_prod" {
-  name  = "argocd-app1"
+  name  = "argocd-app1-prod"
   chart = "../argocd-apps/app1-chart"
 
   values = [
