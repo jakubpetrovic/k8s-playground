@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: apps
+  name: "apps-{{ .Values.environment }}"
   namespace: default
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -20,7 +20,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: app1
+  name: "app1-{{ .Values.environment }}"
   namespace: default
   finalizers:
   - resources-finalizer.argocd.argoproj.io
@@ -28,35 +28,13 @@ spec:
   project: apps
   source:
     repoURL: {{ .Values.gitrepo }}
-    targetRevision: main
-    type: helm
-    path: apps/test-app
-    helm:
-      releaseName: app1
-      valueFiles: 
-        - "values-dev.yaml"
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: test-app
----
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: app1-prod
-  namespace: default
-  finalizers:
-  - resources-finalizer.argocd.argoproj.io
-spec:
-  project: apps
-  source:
-    repoURL: {{ .Values.gitrepo }}
-    targetRevision: env-prod
+    targetRevision: "env-{{ .Values.environment }}"
     type: helm
     path: apps/test-app
     helm:
       releaseName: app1-prod
       valueFiles: 
-        - "values-prod.yaml"
+        - "values-{{ .Values.environment }}.yaml"
   destination:
     server: https://kubernetes.default.svc
     namespace: test-app

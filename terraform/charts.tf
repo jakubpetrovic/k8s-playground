@@ -29,3 +29,16 @@ resource "helm_release" "argocd_app1_dev" {
     helm_release.argocd
   ]
 }
+
+resource "helm_release" "argocd_app1_prod" {
+  name  = "argocd-app1"
+  chart = "../argocd-apps/app1-chart"
+
+  values = [
+    "${file("../argocd-apps/app1-chart/values-prod.yaml")}"
+  ]
+
+  depends_on = [
+    helm_release.argocd
+  ]
+}
