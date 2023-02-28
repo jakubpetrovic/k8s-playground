@@ -10,15 +10,15 @@ spec:
           - app: app2
   template:
     metadata:
-      name: "{{ app }}"
+      name: "app1"
     spec:
       project: app-project
       source:
         repoURL: https://github.com/jakubpetrovic/k8s-playground.git
         targetRevision: HEAD
-        path: apps/{{ app }}/test-app
+        path: apps/app1/test-app
         helm:
-          releaseName: "{{ app }}"
+          releaseName: "app1"
           valueFiles:
             - "values.yaml"
       destination:
