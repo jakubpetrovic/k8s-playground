@@ -1,26 +1,29 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: myapp
+  name: privaterepo
+  namespace: argocd
 spec:
   generators:
-  - clusters:
-      selector:
-        matchLabels:
-          env: myapptarget
+    - git:
+        repoURL: https://github.com/jakubpetrovic/argo-apps-test.git
+        revision: HEAD
+        files:
+        - path: "apps/**/config.json"
   template:
     metadata:
-      name: '{{name}}-myapp'
+      name: "{{ app.name }}"
     spec:
-      project: default
-      syncPolicy:
-        automated:
-          prune: true
-          selfHeal: true
+      project: app-project # project is restricted
       source:
-        repoURL: https://github.com/burrsutter/doks-argocd.git
-        targetRevision: main
-        path: 'mystuff/overlays/{{name}}'
+        # developers may customize app details using JSON files from above repo URL
+        repoURL: "{{app.source}}"
+        targetRevision: env-dev
+        path: "{{app.path}}"
+        helm:
+          releaseName: "{{ app.name }}"
+          valueFiles:
+            - "values-dev.yaml"
       destination:
-        server: '{{server}}'
-        namespace: mystuff
+        server: https://kubernetes.default.svc # cluster is restricted
+        namespace: argocd # namespace is restricted
