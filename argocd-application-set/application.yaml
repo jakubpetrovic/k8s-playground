@@ -1,0 +1,39 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: "app-project"
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  description: ArgoCD project for testing
+  sourceRepos:
+    - "*"
+    - "https://github.com/jakubpetrovic/k8s-playground.git"
+  destinations:
+    - namespace: "*"
+      server: "*"
+  clusterResourceWhitelist:
+    - group: "*"
+      kind: "*"
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: "app1"
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: "app-project"
+  source:
+    repoURL: https://github.com/jakubpetrovic/k8s-playground.git
+    targetRevision: "HEAD"
+    path: apps/app1/test-app
+    helm:
+      releaseName: app1-prod
+      valueFiles:
+        - "values.yaml"
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: "default"

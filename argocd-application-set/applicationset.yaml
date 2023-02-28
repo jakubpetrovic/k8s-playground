@@ -4,19 +4,23 @@ metadata:
   name: apprender
 spec:
   generators:
-  - list:
-      elements:
-      - appName: app1
-      - appName: app2
+    - list:
+        elements:
+          - app: app1
+          - app: app2
   template:
     metadata:
-      name: '{{ appName }}'
+      name: "{{ app }}"
     spec:
-      project: default
+      project: app-project
       source:
         repoURL: https://github.com/jakubpetrovic/k8s-playground.git
         targetRevision: HEAD
-        path: apps/{{ appName }}
+        path: apps/{{ app }}/test-app
+        helm:
+          releaseName: "{{ app }}"
+          valueFiles:
+            - "values.yaml"
       destination:
         server: https://kubernetes.default.svc
-        namespace: default
+        namespace: argocd
