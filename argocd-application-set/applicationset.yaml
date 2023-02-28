@@ -2,23 +2,24 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: apprender
+  namespace: argocd
 spec:
   generators:
     - list:
         elements:
-          - app: app1
-          - app: app2
+          - appName: app1
+          - appName: app2
   template:
     metadata:
-      name: "app1"
+      name: "{{ appName }}"
     spec:
       project: app-project
       source:
         repoURL: https://github.com/jakubpetrovic/k8s-playground.git
         targetRevision: HEAD
-        path: apps/app1/test-app
+        path: apps/{{ appName }}/test-app
         helm:
-          releaseName: "app1"
+          releaseName: "{{ appName }}"
           valueFiles:
             - "values.yaml"
       destination:
