@@ -14,10 +14,13 @@
 resource "helm_release" "argocd" {
   name  = "argocd"
   chart = "../argocd"
+  dependency_update = true
+  namespace = "argocd"
+  create_namespace = true
 }
 
 #ARGOCD App resources
-resource "helm_release" "argocd_app1_dev" {
+/* resource "helm_release" "argocd_app1_dev" {
   name  = "argocd-app1-dev"
   chart = "../argocd-apps/app1-chart"
 
@@ -41,4 +44,4 @@ resource "helm_release" "argocd_app1_prod" {
   depends_on = [
     helm_release.argocd
   ]
-}
+} */
