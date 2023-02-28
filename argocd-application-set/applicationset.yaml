@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: guestbook
+spec:
+  generators:
+  - list:
+      elements:
+      - appName: app1
+      - appName: app2
+  template:
+    metadata:
+      name: '{{ appName }}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/jakubpetrovic/k8s-playground.git
+        targetRevision: HEAD
+        path: apps/{{ appName }}
